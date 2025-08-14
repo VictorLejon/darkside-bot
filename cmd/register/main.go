@@ -52,7 +52,7 @@ func main() {
 		log.Fatal(err)
 	}
 
-	fmt.Println("Registerred new command!")
+	fmt.Println("Registered new command!")
 }
 
 func sendReq(url, botToken string, body any) error {
@@ -66,12 +66,11 @@ func sendReq(url, botToken string, body any) error {
 		return err
 	}
 	defer resp.Body.Close()
-
-	if resp.StatusCode != 200 {
-		slurp, _ := io.ReadAll(resp.Body)
+	slurp, _ := io.ReadAll(resp.Body)
+	if resp.StatusCode/100 != 2 {
 		return fmt.Errorf("discord %s: %s", resp.Status, string(slurp))
 	}
-
+	fmt.Printlnf("Command: %s", string(slurp)
 	return nil
 }
 
